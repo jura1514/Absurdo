@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%"
   },
-  bottomView: { 
+  bottomView: {
     position: "absolute",
     bottom: 0,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    width: '100%',
+    width: "100%"
   },
   bottomBtn: {
     backgroundColor: "rgb(255, 20, 147)",

@@ -82,7 +82,6 @@ class Home extends React.Component {
     copiedLinks.splice(copiedLinks.findIndex(e => e === link), 1);
     this.setState({ copiedLinks });
 
-    console.log(link);
     this.props.navigation.navigate("WebLinkRT", {
       linkHref: link
     });
