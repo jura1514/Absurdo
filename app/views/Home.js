@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { deactivateKeepAwake, activateKeepAwake } from "expo-keep-awake";
+import { FontAwesome } from "@expo/vector-icons";
 import uselessLinks from "../links";
 
 const styles = StyleSheet.create({
@@ -32,6 +33,9 @@ const styles = StyleSheet.create({
   header4: {
     fontSize: 72
   },
+  bottomRow: {
+    flexDirection: "row"
+  },
   buttonContainer: {
     padding: 10,
     borderRadius: 30
@@ -42,6 +46,14 @@ const styles = StyleSheet.create({
   pleaseTxt: {
     color: "#fff",
     fontSize: 45
+  },
+  rightArrow: {
+    marginTop: 15,
+    marginRight: 15
+  },
+  leftArrow: {
+    marginTop: 15,
+    marginLeft: 15
   }
 });
 
@@ -54,8 +66,21 @@ class Home extends React.Component {
     super(props);
   }
 
+  state = {
+    copiedLinks: [...uselessLinks]
+  };
+
   openUselessWebsite() {
-    const link = uselessLinks[Math.floor(Math.random() * uselessLinks.length)];
+    let { copiedLinks } = this.state;
+
+    if (copiedLinks.length === 0) {
+      copiedLinks = [...uselessLinks];
+    }
+
+    const link = copiedLinks[Math.floor(Math.random() * copiedLinks.length)];
+
+    copiedLinks.splice(copiedLinks.findIndex(e => e === link), 1);
+    this.setState({ copiedLinks });
 
     console.log(link);
     this.props.navigation.navigate("WebLinkRT", {
@@ -63,7 +88,7 @@ class Home extends React.Component {
     });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     activateKeepAwake();
   }
 
@@ -78,12 +103,24 @@ class Home extends React.Component {
         <Text style={[styles.header2, styles.header]}>TO ANOTHER</Text>
         <Text style={[styles.header3, styles.header]}>USELESS</Text>
         <Text style={[styles.header4, styles.header]}>WEBSITE</Text>
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.pleaseButton]}
-          onPress={() => this.openUselessWebsite()}
-        >
-          <Text style={styles.pleaseTxt}>PLEASE</Text>
-        </TouchableHighlight>
+        <View style={styles.bottomRow}>
+          <FontAwesome
+            style={styles.rightArrow}
+            size={52}
+            name="long-arrow-right"
+          />
+          <TouchableHighlight
+            style={[styles.buttonContainer, styles.pleaseButton]}
+            onPress={() => this.openUselessWebsite()}
+          >
+            <Text style={styles.pleaseTxt}>PLEASE</Text>
+          </TouchableHighlight>
+          <FontAwesome
+            style={styles.leftArrow}
+            size={52}
+            name="long-arrow-left"
+          />
+        </View>
       </View>
     );
   }

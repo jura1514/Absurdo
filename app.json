@@ -2,20 +2,18 @@
   "expo": {
     "name": "Absurdo",
     "slug": "Absurdo",
-    "privacy": "public",
+    "privacy": "unlisted",
     "sdkVersion": "34.0.0",
     "platforms": [
-      "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "orientation": "landscape",
+    "icon": "./assets/absurdo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/absurdo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -25,6 +23,10 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.devopal.absurdo"
+    },
+    "description": ""
   }
 }
