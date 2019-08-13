@@ -4,10 +4,8 @@
     "slug": "Absurdo",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",
-    "platforms": [
-      "android"
-    ],
-    "version": "1.0.0",
+    "platforms": ["android"],
+    "version": "1.0.0-beta01",
     "orientation": "landscape",
     "icon": "./assets/absurdo.png",
     "splash": {
@@ -18,14 +16,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "package": "com.devopal.absurdo"
+      "package": "com.devopal.absurdo",
+      "versionCode": 1
     },
     "description": ""
   }

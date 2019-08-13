@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { deactivateKeepAwake, activateKeepAwake } from "expo-keep-awake";
 import { FontAwesome } from "@expo/vector-icons";
 import uselessLinks from "../links";
+import { NavigationEvents } from "react-navigation";
 
 const styles = StyleSheet.create({
   container: {
@@ -57,6 +58,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const expiryDate = new Date(2019, 7, 15, 22, 0);
+
 class Home extends React.Component {
   static navigationOptions = {
     header: null
@@ -67,7 +70,8 @@ class Home extends React.Component {
   }
 
   state = {
-    copiedLinks: [...uselessLinks]
+    copiedLinks: [...uselessLinks],
+    expired: false
   };
 
   openUselessWebsite() {
@@ -95,31 +99,49 @@ class Home extends React.Component {
     deactivateKeepAwake();
   }
 
+  didFocus = payload => {
+    const currentDate = new Date();
+
+    if (currentDate.getTime() > expiryDate.getTime()) {
+      this.setState({ expired: true });
+    } else {
+      this.setState({ expired: false });
+    }
+  };
+
   render() {
+    const { expired } = this.state;
     return (
       <View style={styles.container}>
-        <Text style={[styles.header1, styles.header]}>TAKE ME</Text>
-        <Text style={[styles.header2, styles.header]}>TO ANOTHER</Text>
-        <Text style={[styles.header3, styles.header]}>USELESS</Text>
-        <Text style={[styles.header4, styles.header]}>WEBSITE</Text>
-        <View style={styles.bottomRow}>
-          <FontAwesome
-            style={styles.rightArrow}
-            size={52}
-            name="long-arrow-right"
-          />
-          <TouchableHighlight
-            style={[styles.buttonContainer, styles.pleaseButton]}
-            onPress={() => this.openUselessWebsite()}
-          >
-            <Text style={styles.pleaseTxt}>PLEASE</Text>
-          </TouchableHighlight>
-          <FontAwesome
-            style={styles.leftArrow}
-            size={52}
-            name="long-arrow-left"
-          />
-        </View>
+        <NavigationEvents onDidFocus={payload => this.didFocus(payload)} />
+        {expired === false ? (
+          [
+            <Text style={[styles.header1, styles.header]}>TAKE ME</Text>,
+            <Text style={[styles.header2, styles.header]}>TO ANOTHER</Text>,
+            <Text style={[styles.header3, styles.header]}>USELESS</Text>,
+            <Text style={[styles.header4, styles.header]}>WEBSITE</Text>,
+            <View style={styles.bottomRow}>
+              <FontAwesome
+                style={styles.rightArrow}
+                size={52}
+                name="long-arrow-right"
+              />
+              <TouchableHighlight
+                style={[styles.buttonContainer, styles.pleaseButton]}
+                onPress={() => this.openUselessWebsite()}
+              >
+                <Text style={styles.pleaseTxt}>PLEASE</Text>
+              </TouchableHighlight>
+              <FontAwesome
+                style={styles.leftArrow}
+                size={52}
+                name="long-arrow-left"
+              />
+            </View>
+          ]
+        ) : (
+          <Text style={[styles.header1, styles.header]}>APP HAS EXPIRED</Text>
+        )}
       </View>
     );
   }

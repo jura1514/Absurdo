@@ -8,7 +8,6 @@ import {
   Platform,
   TouchableHighlight
 } from "react-native";
-import { deactivateKeepAwake, activateKeepAwake } from "expo-keep-awake";
 import { NavigationEvents } from "react-navigation";
 
 const styles = StyleSheet.create({
