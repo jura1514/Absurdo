@@ -6,8 +6,15 @@ import {
   Text,
   StatusBar,
   Platform,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator,
+  TextInput
 } from "react-native";
+import {
+  Foundation,
+  MaterialIcons,
+  MaterialCommunityIcons
+} from "@expo/vector-icons";
 import { NavigationEvents } from "react-navigation";
 
 const styles = StyleSheet.create({
@@ -23,9 +30,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  webViewContainer: {
+    flex: 1,
+    overflow: "hidden"
+  },
   webView: {
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
     width: "100%"
   },
   bottomView: {
@@ -45,6 +57,27 @@ const styles = StyleSheet.create({
   backTxt: {
     color: "#fff",
     fontSize: 35
+  },
+  browserAddressBar: {
+    height: 35,
+    backgroundColor: "#D3D3D3",
+    borderRadius: 20,
+    flex: 1,
+    borderWidth: 0,
+    paddingLeft: 15
+  },
+  browserBar: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    height: 45,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  icon: {
+    margin: 10
+  },
+  disabled: {
+    opacity: 0.3
   }
 });
 
@@ -57,7 +90,7 @@ class WebLink extends React.Component {
     href: ""
   };
 
-  didFocus = payload => {
+  didFocus = () => {
     const linkHref = this.props.navigation.getParam("linkHref", null);
     this.setState({ href: linkHref });
   };
@@ -66,27 +99,68 @@ class WebLink extends React.Component {
     this.props.navigation.goBack();
   }
 
+  renderWebViewAddressBar() {
+    const { href } = this.state;
+
+    if (href) {
+      return (
+        <View style={styles.browserBar}>
+          <Foundation style={styles.icon} size={30} name="web" />
+
+          <MaterialIcons
+            style={[styles.icon, styles.disabled]}
+            size={30}
+            name="arrow-back"
+          />
+          <MaterialIcons
+            style={[styles.icon, styles.disabled]}
+            size={30}
+            name="arrow-forward"
+          />
+          <MaterialIcons style={styles.icon} name="refresh" size={30} />
+
+          <TextInput
+            style={styles.browserAddressBar}
+            value={href}
+            editable={false}
+          />
+          <MaterialCommunityIcons
+            style={styles.icon}
+            name="dots-vertical"
+            size={30}
+          />
+        </View>
+      );
+    }
+  }
+
   renderWebView() {
     const { href } = this.state;
 
     if (href) {
       return (
-        <WebView
-          style={styles.webView}
-          scalesPageToFit={true}
-          source={{ uri: href }}
-          javaScriptEnabled={true}
-        />
+        <View style={styles.webViewContainer}>
+          <WebView
+            style={styles.webView}
+            scalesPageToFit={true}
+            source={{ uri: href }}
+            javaScriptEnabled={true}
+            renderLoading={() => (
+              <ActivityIndicator size="large" color="#333" />
+            )}
+          />
+        </View>
       );
+    } else {
+      return <ActivityIndicator size="large" color="#333" />;
     }
-
-    return <Text style={styles.loading}>Loading...</Text>;
   }
 
   render() {
     return (
       <View style={styles.container}>
         <NavigationEvents onDidFocus={payload => this.didFocus(payload)} />
+        {this.renderWebViewAddressBar()}
         {this.renderWebView()}
         <View style={styles.bottomView}>
           <TouchableHighlight
