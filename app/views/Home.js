@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const expiryDate = new Date(2019, 7, 15, 22, 0);
+const expiryDate = new Date(2019, 7, 20, 12, 0);
 
 class Home extends React.Component {
   static navigationOptions = {
@@ -99,7 +99,7 @@ class Home extends React.Component {
     deactivateKeepAwake();
   }
 
-  didFocus = payload => {
+  didFocus = () => {
     const currentDate = new Date();
 
     if (currentDate.getTime() > expiryDate.getTime()) {
