@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   bottomBtn: {
-    backgroundColor: "rgb(255, 20, 147)",
+    backgroundColor: "black",
     padding: 10,
     borderRadius: 30,
     marginBottom: 30,

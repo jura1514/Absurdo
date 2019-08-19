@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 30
   },
   pleaseButton: {
-    backgroundColor: "rgb(255, 20, 147)"
+    backgroundColor: "black"
   },
   pleaseTxt: {
     color: "#fff",
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const expiryDate = new Date(2019, 7, 20, 12, 0);
+const expiryDate = new Date(2019, 7, 21, 18, 0);
 
 class Home extends React.Component {
   static navigationOptions = {
